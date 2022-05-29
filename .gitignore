@@ -1,2 +1,3 @@
 /.vscode
-*.log
+__debug_bin
+cmd/logservices/distributed.log

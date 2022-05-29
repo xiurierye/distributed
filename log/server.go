@@ -8,20 +8,8 @@ import (
 )
 
 var log *stlog.Logger
-var logfile string
 
 type filelog string
-type mylog int32
-
-func (ml mylog) Write(data []byte) (int, error) {
-	f, err := os.OpenFile(logfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
-	if err != nil {
-		return 0, err
-	}
-	defer f.Close()
-	return f.Write(data)
-
-}
 
 func (fl filelog) Write(data []byte) (int, error) {
 	f, err := os.OpenFile(string(fl), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
@@ -33,25 +21,10 @@ func (fl filelog) Write(data []byte) (int, error) {
 
 }
 
-// func (fl filelog) Write(data []byte) (int, error) {
-// 	f, err := os.OpenFile(string(fl), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
-// 	if err != nil {
-// 		return 0, err
-// 	}
-// 	defer f.Close()
-// 	return f.Write(data)
-
-// }
 func Run(destination string) {
-	logfile = destination
-	log = stlog.New(mylog(1), "go: ", stlog.LstdFlags)
+	log = stlog.New(filelog(destination), "go: ", stlog.LstdFlags)
 
 }
-
-// func Run(destination string) {
-// log = stlog.New(filelog(destination), "go: ", stlog.LstdFlags)
-
-// }
 
 func RegisterHandlers() {
 	http.HandleFunc("/log", func(w http.ResponseWriter, r *http.Request) {

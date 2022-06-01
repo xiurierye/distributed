@@ -1,6 +1,7 @@
 package registry
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -36,10 +37,10 @@ func (r *registry) remove(url string) error {
 
 			reg.registrations = append(reg.registrations[:i], reg.registrations[i+1:]...)
 			reg.mutex.Unlock()
+			return nil
 		}
-		return nil
 	}
-	return fmt.Errorf("Service at URL %s not found", url)
+	return fmt.Errorf("Service at URL " + url + "found")
 }
 
 var reg = registry{
@@ -83,6 +84,21 @@ func (s RegistryService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		return
+
+	case http.MethodGet:
+		reg.mutex.Lock()
+		defer reg.mutex.Unlock()
+
+		var b bytes.Buffer
+		enc := json.NewEncoder(&b)
+		err := enc.Encode(reg.registrations)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.Header().Add("Content-type", "application/json")
+		w.Write(b.Bytes())
+
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return

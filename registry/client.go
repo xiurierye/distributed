@@ -24,8 +24,7 @@ func RegisterService(r Registration) error {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Failed to register service. Registry serice "+
-			"responded with code %v", resp.StatusCode)
+		return fmt.Errorf("Failed to register service. Registry serice responded with code %d", resp.StatusCode)
 	}
 
 	return nil

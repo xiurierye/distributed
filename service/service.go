@@ -12,10 +12,10 @@ func Start(ctx context.Context, r registry.Registration, host, port string, regi
 	registerHandler()
 	ctx = startService(ctx, r.ServiceName, host, port)
 
-	err := registry.RegisterService(r)
-	if err != nil {
-		return ctx, err
-	}
+	// err := registry.RegisterService(r)
+	// if err != nil {
+	// 	return ctx, err
+	// }
 
 	return ctx, nil
 }
@@ -38,7 +38,7 @@ func startService(ctx context.Context, serviceName registry.ServiceName, host, p
 	}()
 
 	go func() {
-		fmt.Printf("%v staredc, Press any key to stop. \n", serviceName)
+		fmt.Printf("%v started, Press any key to stop. \n", serviceName)
 		var s string
 		fmt.Scanln(&s)
 		srv.Shutdown(ctx)

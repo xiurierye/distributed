@@ -26,11 +26,7 @@ func (r *registry) add(reg Registration) error {
 	r.mutex.Unlock()
 
 	err := r.sendRequiredServices(reg)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 
 }
 

@@ -62,7 +62,7 @@ func (sh studentHandler) getAll(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-
+	log.Print("aaa")
 	r.Header.Add("Content-Type", "application/json")
 	w.Write(data)
 }
@@ -99,7 +99,7 @@ func (sh studentHandler) getOne(w http.ResponseWriter, r *http.Request, id int) 
 		return
 	}
 
-	w.Header().Add("Content-type", "application/json")
+	w.Header().Add("Content-Type", "application/json")
 	w.Write(data)
 
 }

@@ -115,7 +115,7 @@ func (p *providers) Update(pat patch) {
 	}
 }
 
-// 本来时返回 服务对应的多个url 单当前服务很简单  ,    只有一个url提供服务就 偷懒直接返回string
+// 本来是返回 服务对应的多个url 单当前服务很简单  ,    只有一个url提供服务就 偷懒直接返回string
 func (p providers) get(name ServiceName) (string, error) {
 	if providers, ok := p.services[name]; ok {
 		return providers[int(rand.Float32()*float32(len(providers)))], nil

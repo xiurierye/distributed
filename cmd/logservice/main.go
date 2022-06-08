@@ -17,8 +17,10 @@ func main() {
 	serviceAddress := fmt.Sprintf("http://%s:%s", host, port)
 
 	var r = registry.Registration{
-		ServiceName: registry.LogService,
-		ServiceURL:  serviceAddress,
+		ServiceName:      registry.LogService,
+		ServiceURL:       serviceAddress,
+		RequiredServices: make([]registry.ServiceName, 0),
+		ServiceUpdateURl: serviceAddress + "/services ",
 	}
 
 	ctx, err := service.Start(context.Background(), r, host, port, log.RegisterHandlers)

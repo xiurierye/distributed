@@ -12,6 +12,16 @@ import (
 )
 
 func RegisterService(r Registration) error {
+	heartbeatURL, err := url.Parse(r.HeartbeatURL)
+	if err != nil {
+		return err
+	}
+
+	http.HandleFunc(heartbeatURL.Path, func(w http.ResponseWriter, r *http.Request) {
+		//demo 比较简单, 如果是线上环境, 可能还会获取服务器其他状态,比如cpu, 内存等信息
+		w.WriteHeader(http.StatusOK)
+	})
+
 	serveicUpdateURL, err := url.Parse(r.ServiceUpdateURl)
 	if err != nil {
 		return err

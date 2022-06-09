@@ -72,6 +72,8 @@ func (suh serviceUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 
 }
 
+//url 关闭的服务地址
+//不实用 serviceName ,因为同一服务会有多个实例
 func ShutdowService(url string) error {
 
 	req, err := http.NewRequest(http.MethodDelete, ServicesURL, bytes.NewBuffer([]byte(url)))
